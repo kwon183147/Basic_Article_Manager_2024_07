@@ -60,7 +60,28 @@ public class Main {
 				for (int i = articles.size() - 1; i >= 0; i--) {
 					Article article = articles.get(i);
 					System.out.printf("%d	|	%s\n", article.id, article.title);
+				} 
+					
+			}else if (cmd.startsWith("article detail ")) {
+				String[] cmdBits = cmd.split(" ");
+				int id = Integer.parseInt(cmdBits[2]);
+				
+				Article foundArticle = null;
+				
+				for (Article article : articles) {
+					if ( id ==  article.id) {
+						foundArticle = article;
+					} 
 				}
+				
+				if (foundArticle == null) {
+					System.out.println(id + "번 게시물이 존재하지 않습니다.");
+					continue;
+				}
+				
+				System.out.printf("번호: %d\n", foundArticle.id);
+				System.out.printf("제목: %d\n", foundArticle.title);
+				System.out.printf("내용: %d\n", foundArticle.body);
 				
 			} else {
 				System.out.println("존재하지않는 명령어 입니다");
