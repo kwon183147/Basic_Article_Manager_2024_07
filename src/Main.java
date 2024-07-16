@@ -93,7 +93,38 @@ public class Main {
 				System.out.printf("제목: %d\n", foundArticle.title);
 				System.out.printf("내용: %d\n", foundArticle.body);
 				
-			} else {
+			} else if (cmd.startsWith("article delete ")) {
+				String[] cmdBits = cmd.split(" ");
+				
+				int id = 0;
+				try {
+					id = Integer.parseInt(cmdBits[2]);
+				} catch (NumberFormatException e) {
+					System.out.println("명령어가 몰바르지 않습니다.");
+					continue;
+				} catch (Exception e) {
+					System.out.println("error: " + e);
+				}
+				
+				Article foundArticle = null;
+				
+				for (Article article : articles) {
+					if ( id ==  article.id) {
+						foundArticle = article;
+						break;
+					} 
+				}
+				
+				if (foundArticle == null) {
+					System.out.println(id + "번 게시물이 존재하지 않습니다.");
+					continue;
+				}
+				
+				articles.remove(foundArticle);
+				
+				System.out.printf(id + "번 게시물이 존재하지 않습니다.");
+				
+			}else {
 				System.out.println("존재하지않는 명령어 입니다");
 			}
 		}
@@ -114,4 +145,4 @@ class Article {
 		this.title = title;
 		this.body = body;
 	}
-	}
+}
