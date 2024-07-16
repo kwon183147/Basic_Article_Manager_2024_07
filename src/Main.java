@@ -64,13 +64,23 @@ public class Main {
 					
 			}else if (cmd.startsWith("article detail ")) {
 				String[] cmdBits = cmd.split(" ");
-				int id = Integer.parseInt(cmdBits[2]);
+				
+				int id = 0;
+				try {
+					id = Integer.parseInt(cmdBits[2]);
+				} catch (NumberFormatException e) {
+					System.out.println("명령어가 몰바르지 않습니다.");
+					continue;
+				} catch (Exception e) {
+					System.out.println("error: " + e);
+				}
 				
 				Article foundArticle = null;
 				
 				for (Article article : articles) {
 					if ( id ==  article.id) {
 						foundArticle = article;
+						break;
 					} 
 				}
 				
