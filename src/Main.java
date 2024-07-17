@@ -106,21 +106,26 @@ public class Main {
 					System.out.println("error: " + e);
 				}
 				
-				Article foundArticle = null;
+//				Article foundArticle = null;
 				
+				int foundIndex = -1;
+				
+				int i =0;
 				for (Article article : articles) {
 					if ( id ==  article.id) {
-						foundArticle = article;
+						foundIndex = i;
 						break;
 					} 
+					
+					i++;
 				}
 				
-				if (foundArticle == null) {
+				if (foundIndex == -1) {
 					System.out.println(id + "번 게시물이 존재하지 않습니다.");
 					continue;
 				}
 				
-				articles.remove(foundArticle);
+				articles.remove(foundIndex);
 				
 				System.out.printf(id + "번 게시물이 존재하지 않습니다.");
 				
