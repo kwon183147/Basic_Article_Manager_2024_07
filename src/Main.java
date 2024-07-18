@@ -3,14 +3,21 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+	static int lastArticleId;
+	static List<Article> articles;
+
+	static {
+		lastArticleId = 0;
+		articles = new ArrayList<>();
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("==프로그램 시작==");
 		
+		makeTestData();
+		
 		Scanner sc = new Scanner(System.in);
 		
-		int lastArticleId = 0;
-		List<Article> articles = new ArrayList<>();
-				
 		while(true) {
 			System.out.printf("명령어) ");	
 			
@@ -180,6 +187,13 @@ public class Main {
 		sc.close();
 		
 		System.out.println("==프로그램 종료==");
+	}
+	
+	private static void makeTestData() {
+		System.out.println("테스트용 게시물 데이터 3개를 생성했습니다");
+		for (int i = 1; i <= 3; i++) {
+			articles.add(new Article(++lastArticleId, Util.getDateStr(), "제목" + i, "내용" + i, i * 10));
+		}
 	}
 }
 
