@@ -10,13 +10,11 @@ import com.exam.Bam.util.Util;
 public class MemberController extends Controller {
 
 	private List<Member> members;
-	private Member loginedMember;
 
 	public MemberController(Scanner sc) {
 		this.sc = sc;
 		this.lastId = 0;
 		this.members = new ArrayList<>();
-		this.loginedMember = null;
 	}
 	@Override
 	public void doAction(String cmd, String methodName) {
@@ -100,7 +98,7 @@ public class MemberController extends Controller {
 	}
 	
 	private void doLogin() {
-		if (this.loginedMember != null) {
+		if (loginedMember != null) {
 			System.out.println("이미 로그인이 되어있습니다");
 			return;
 		}
@@ -132,18 +130,18 @@ public class MemberController extends Controller {
 			return;
 		}
 
-		this.loginedMember = member;
+		loginedMember = member;
 
 		System.out.printf("[ %s ] 회원님 환영합니다~\n", member.getName());
 	}
 
 	private void doLogout() {
-		if (this.loginedMember == null) {
+		if (loginedMember == null) {
 			System.out.println("로그인이 되어 있지 않습니다");
 			return;
 		}
 
-		this.loginedMember = null;
+		loginedMember = null;
 		System.out.println("정상적으로 로그아웃 되었습니다");
 	}
 
