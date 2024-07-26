@@ -1,21 +1,18 @@
 package com.exam.Bam.controller;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-import com.exam.Bam.container.Container;
 import com.exam.Bam.dto.Member;
-import com.exam.Bam.util.Util;
+import com.exam.Bam.service.MemberService;
 
 public class MemberController extends Controller {
 
-	private List<Member> members;
+	private MemberService memberService;
 
 	public MemberController(Scanner sc) {
 		this.sc = sc;
-		this.lastId = 0;
-		this.members = Container.members;
+		this.memberService = new MemberService();
 	}
 	@Override
 	public void doAction(String cmd, String methodName) {
@@ -48,7 +45,7 @@ public class MemberController extends Controller {
 				continue;
 			}
 
-			Member member = getMemberByLoginId(loginId);
+			Member member = memberService.getMemberByLoginId(loginId);
 
 			if (member != null) {
 				System.out.printf("[ %s ]은(는) 이미 사용중인 아이디입니다\n", loginId);
@@ -89,11 +86,7 @@ public class MemberController extends Controller {
 			break;
 		}
 
-		lastId++;
-
-		Member member = new Member(lastId, Util.getDateStr(), loginId, loginPw, name);
-
-		members.add(member);
+		memberService.joinMember(loginId, loginPw, name);
 
 		System.out.println(name + "님이 가입되었습니다");
 	}
@@ -115,7 +108,7 @@ public class MemberController extends Controller {
 			return;
 		}
 
-		Member member = getMemberByLoginId(loginId);
+		Member member = memberService.getMemberByLoginId(loginId);
 
 		if (member == null) {
 			System.out.printf("[ %s ]은(는) 존재하지 않는 아이디입니다\n", loginId);
@@ -138,20 +131,12 @@ public class MemberController extends Controller {
 		System.out.println("정상적으로 로그아웃 되었습니다");
 	}
 
-	private Member getMemberByLoginId(String loginId) {
-		for (Member member : members) {
-			if (member.getLoginId().equals(loginId)) {
-				return member;
-			}
-		}
-		return null;
-	}
 	
 	@Override
 	public void makeTestData() {
 		System.out.println("테스트용 회원 데이터 3개를 생성했습니다");
 		for (int i = 1; i <= 3; i++) {
-			members.add(new Member(++lastId, Util.getDateStr(), "test" + i, "test" + i, "유저" + i));
+			memberService.joinMember( "test" + i, "test" + i, "유저" + i);
 		}
 	}
 
